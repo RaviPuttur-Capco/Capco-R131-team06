@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Commerce Website</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>My E-Commerce</h1>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#login">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="home">
+    <h2>Featured Items</h2>
+    <div class="items">
+      <div class="item">
+        <img src="https://via.placeholder.com/150" alt="Product 1" />
+        <p>Product 1 - $10</p>
+        <button onclick="addToCart('Product 1', 10)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <img src="https://via.placeholder.com/150" alt="Product 2" />
+        <p>Product 2 - $15</p>
+        <button onclick="addToCart('Product 2', 15)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <img src="https://via.placeholder.com/150" alt="Product 3" />
+        <p>Product 3 - $20</p>
+        <button onclick="addToCart('Product 3', 20)">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>We are a leading e-commerce platform offering a variety of quality products at competitive prices.</p>
+  </section>
+
+  <section id="services">
+    <h2>Our Services</h2>
+    <ul>
+      <li>24/7 Customer Support</li>
+      <li>Fast Delivery</li>
+      <li>Secure Payments</li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form id="contactForm" onsubmit="return validateForm()">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <section id="cart">
+    <h2>Your Cart</h2>
+    <ul id="cartItems"></ul>
+    <p id="totalAmount">Total: $0</p>
+  </section>
+
+  <section id="login">
+    <h2>Login</h2>
+    <form id="loginForm" onsubmit="return validateLogin()">
+      <label for="loginEmail">Email:</label>
+      <input type="email" id="loginEmail" name="loginEmail" required />
+      <label for="loginPassword">Password:</label>
+      <input type="password" id="loginPassword" name="loginPassword" required />
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 My E-Commerce</p>
+  </footer>
+
+  <script>
+    function validateForm() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (name === "" || email === "" || message === "") {
+        alert("All fields are required.");
+        return false;
+      }
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        alert("Enter a valid email address.");
+        return false;
+      }
+      alert("Form submitted successfully!");
+      return true;
+    }
+
+    function validateLogin() {
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+
+      if (email === "" || password === "") {
+        alert("Both fields are required.");
+        return false;
+      }
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        alert("Enter a valid email address.");
+        return false;
+      }
+      alert("Login successful!");
+      return true;
+    }
+
+    let cart = [];
+
+    function addToCart(product, price) {
+      cart.push({ product, price });
+      displayCart();
+    }
+
+    function displayCart() {
+      const cartItems = document.getElementById("cartItems");
+      const totalAmount = document.getElementById("totalAmount");
+      cartItems.innerHTML = "";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        total += item.price;
+        const li = document.createElement("li");
+        li.textContent = `${item.product} - $${item.price}`;
+        cartItems.appendChild(li);
+      });
+
+      totalAmount.textContent = `Total: $${total}`;
+    }
+  </script>
+</body>
+</html>
